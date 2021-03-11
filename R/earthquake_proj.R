@@ -2,16 +2,6 @@
 # Tomás Murray
 # 2021/03/11
 # Capstone Assignment: Documentation and Packaging
-# ------------------------------------------------------------------------------
-# Load libraries
-# ------------------------------------------------------------------------------
-library(tidyverse)
-library(ggplot2)
-library(lubridate)
-library(leaflet)
-library(htmltools)
-library(devtools)
-#setwd("C:/Users/MurrayT/Documents/Work/Coursera/5_Capstone")
 #------------------------------------------------------------------------------
 # Load and tidy data
 #------------------------------------------------------------------------------
