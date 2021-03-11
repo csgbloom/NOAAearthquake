@@ -1,0 +1,21 @@
+Package: NOAAearthquake
+Type: Package
+Title: NOAA Earthquake Analysis
+Version: 0.1.0
+Author: Tomas Murray
+Maintainer: Tomas Murray <yourself@somewhere.net>
+Description: Loads, cleans, plots and maps NOAA earthquake data.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+  dplyr,
+  ggplot2,
+  htmltools,
+  leaflet,
+  lubridate,
+  readr,
+  scales,
+  stringr,
+  tidyr
+RoxygenNote: 7.1.1
