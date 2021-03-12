@@ -24,7 +24,7 @@
 #' eq_clean_data("data/earthquakes.tsv")
 #' }
 #'
-#' @importFrom readr read_delim cols
+#' @importFrom readr read_delim cols col_double col_integer col_character
 #' @importFrom dplyr select slice mutate
 #' @importFrom tidyr replace_na
 #' @importFrom lubridate make_date
@@ -34,11 +34,11 @@
 eq_clean_data <- function(filename){
 
   eq_c <- readr::read_delim(filename, "\t", col_types = readr::cols(
-    'Damage ($Mil)' = col_double(),
-    'Missing' = col_integer(),
-    'Total Missing' = col_integer(),
-    'Total Damage ($Mil)' = col_double(),
-    'Total Missing Description' = col_character())) %>%
+    'Damage ($Mil)' = readr::col_double(),
+    'Missing' = readr::col_integer(),
+    'Total Missing' = readr::col_integer(),
+    'Total Damage ($Mil)' = readr::col_double(),
+    'Total Missing Description' = readr::col_character())) %>%
     dplyr::select(-'Search Parameters') %>%
     dplyr::slice(-1) %>%
     tidyr::replace_na(list(Mo = 1, Dy = 1)) %>% # Assume 01/01 for years without month or day data
