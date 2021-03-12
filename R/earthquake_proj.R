@@ -28,6 +28,7 @@
 #' @importFrom dplyr select slice mutate
 #' @importFrom tidyr replace_na
 #' @importFrom lubridate make_date
+#' @importFrom magrittr %>%
 #'
 #' @export
 eq_clean_data <- function(filename){
@@ -63,7 +64,7 @@ eq_clean_data <- function(filename){
 #'
 #' @importFrom stringr str_to_title word
 #' @importFrom dplyr mutate
-#'
+#' @importFrom magrittr %>%
 #' @export
 eq_location_clean <- function(dataframe){
 
@@ -224,6 +225,7 @@ theme_timeline <- function() {
 #' @importFrom ggplot2 ggproto Geom aes draw_key_blank
 #' @importFrom dplyr group_by_ top_n ungroup
 #' @importFrom grid polylineGrob unit gpar textGrob gList
+#' @importFrom magrittr %>%
 #'
 GeomTimelineLabel <- ggplot2::ggproto(
   "GeomTimelineLabel", ggplot2::Geom,
@@ -332,6 +334,7 @@ geom_timeline_label <- function(mapping = NULL, data = NULL, stat = "identity",
 #'
 #' @importFrom dplyr mutate
 #' @importFrom leaflet leaflet addTiles addCircleMarkers
+#' @importFrom magrittr %>%
 #'
 #' @export
 eq_map <- function(data, annot_col) {
@@ -371,6 +374,7 @@ eq_map <- function(data, annot_col) {
 #' @importFrom stringr str_c str_remove_all
 #' @importFrom dplyr mutate
 #' @importFrom htmltools HTML
+#' @importFrom magrittr %>%
 #'
 #' @export
 eq_create_label <- function(data) {
