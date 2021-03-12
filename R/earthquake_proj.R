@@ -24,7 +24,7 @@
 #' eq_clean_data("data/earthquakes.tsv")
 #' }
 #'
-#' @importFrom readr read_delim
+#' @importFrom readr read_delim cols
 #' @importFrom dplyr select slice mutate
 #' @importFrom tidyr replace_na
 #' @importFrom lubridate make_date
@@ -33,7 +33,7 @@
 #' @export
 eq_clean_data <- function(filename){
 
-  eq_c <- readr::read_delim(filename, "\t", col_types = cols(
+  eq_c <- readr::read_delim(filename, "\t", col_types = readr::cols(
     'Damage ($Mil)' = col_double(),
     'Missing' = col_integer(),
     'Total Missing' = col_integer(),
