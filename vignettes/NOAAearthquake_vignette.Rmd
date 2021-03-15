@@ -1,17 +1,21 @@
 ---
-title: "introduction"
+title: "NOAAearthquake_vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{NOAAearthquake_vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo = TRUE
 )
+library(NOAAearthquake)
+library(tidyverse)
+library(leaflet)
 ```
 
 # NOAA Earthquake Analysis
@@ -22,16 +26,6 @@ This package has been developed as part of the capstone module for Coursera's [M
 * 10 or more deaths, 
 * Magnitude 7.5 or greater, 
 * Modified Mercalli Intensity X or greater, or the earthquake generated a tsunami.
-
-## Installation
-
-You can install the released version of the NOAA earthquake package by:
-
-```{r}
-library(devtools)
-install_github("csgbloom/NOAAearthquake")
-library(NOAAearthquake)
-```
 
 ## How to load and clean the data
 
@@ -54,7 +48,6 @@ head(df2$Country)
 The function **geom_timeline()** generates a generates a basic ggplot2 visualisation of the timeline of earthquakes for a given year range and country.  The size of the marker is proportional to the magnitude of the earthquake and the colour of the marker is scaled according to the the total number of deaths caused by the earthquake.  The magrittr package must be loaded to make use of the `%>%` operator.
 
 ```{r}
-library(tidyverse)
 df2 %>% 
    dplyr::filter(Country %in% c("Mexico", "Turkey"), lubridate::year(Date) > 2000) %>% 
    ggplot2::ggplot(aes(x = Date, y = Country, color = `Total Deaths`, size = Mag)) +
