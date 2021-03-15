@@ -14,8 +14,12 @@ knitr::opts_chunk$set(
   echo = TRUE
 )
 library(NOAAearthquake)
-library(tidyverse)
+library(readr)
+library(magrittr)
+library(dplyr)
+library(ggplot2)
 library(leaflet)
+library(lubridate)
 ```
 
 # NOAA Earthquake Analysis
