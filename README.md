@@ -32,12 +32,15 @@ You can install the released version of the NOAA earthquake package by:
 library(devtools)
 #> Loading required package: usethis
 install_github("csgbloom/NOAAearthquake")
-#> Skipping install of 'NOAAearthquake' from a github remote, the SHA1 (78ce4bb9) has not changed since last install.
+#> Skipping install of 'NOAAearthquake' from a github remote, the SHA1 (202547e3) has not changed since last install.
 #>   Use `force = TRUE` to force installation
 library(NOAAearthquake)
 ```
 
 ## Examples
+
+A vignette on how to use the package is available from
+[here](vignettes/introduction.html)
 
 The function **eq\_clean\_data()**:
 

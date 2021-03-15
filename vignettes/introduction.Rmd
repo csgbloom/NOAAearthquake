@@ -1,8 +1,8 @@
 ---
-title: "introduction"
+title: "NOAAearthquake"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{NOAAearthquake}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +14,92 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+# NOAA Earthquake Analysis
+
+This package has been developed as part of the capstone module for Coursera's [Mastering Software Development in R Specialization](https://www.coursera.org/specializations/r).  This package allows you to load earthquake data from the [US National Centers for Environmental Information](https://www.ngdc.noaa.gov/hazel/view/hazards/earthquake/search).  These data contains information on destructive earthquakes from 2150 B.C. to the present that meet at least one of the following criteria:
+
+* Moderate damage (approximately $1 million or more), 
+* 10 or more deaths, 
+* Magnitude 7.5 or greater, 
+* Modified Mercalli Intensity X or greater, or the earthquake generated a tsunami.
+
+## Installation
+
+You can install the released version of the NOAA earthquake package by:
+
+```{r}
+library(devtools)
+install_github("csgbloom/NOAAearthquake")
 library(NOAAearthquake)
+```
+
+## How to load and clean the data
+
+The function **eq_clean_data()** loads the .tsv data file downloaded from the search function on the NCEI website.  It then creates a single `Date` field from the original `Year`, `Mo` and `Dy` fields, adding 01-01 where no month or day were present in the original data.
+
+```{r}
+df1 <- eq_clean_data(system.file("extdata", "earthquakes.tsv", package = "NOAAearthquake"))
+head(df1$Date)
+```
+
+The function **eq_location_clean()** then splits the original `Location Name` field at the : to generate a `Location Name` without the country, and a separate `Country`.  Both fields are reformatted from all caps to capialisation as proper nouns.
+
+```{r}
+df2 <- eq_location_clean(df1)
+head(df2$Country)
+```
+
+## How to generate a timeline plot
+
+The function **geom_timeline()** generates a generates a basic ggplot2 visualisation of the timeline of earthquakes for a given year range and country.  The size of the marker is proportional to the magnitude of the earthquake and the colour of the marker is scaled according to the the total number of deaths caused by the earthquake.  The magrittr package must be loaded to make use of the `%>%` operator.
+
+```{r}
+library(tidyverse)
+df2 %>% 
+   dplyr::filter(Country %in% c("Mexico", "Turkey"), lubridate::year(Date) > 2000) %>% 
+   ggplot2::ggplot(aes(x = Date, y = Country, color = `Total Deaths`, size = Mag)) +
+   geom_timeline() +
+   ggplot2::labs(size = "Richter scale value", col = "# Deaths")
+```
+
+To apply a cleaner aesthetic to the original plot, add the function **theme_timeline()**.
+
+```{r}
+df2 %>% 
+   dplyr::filter(Country %in% c("Mexico", "Turkey"), lubridate::year(Date) > 2000) %>% 
+   ggplot2::ggplot(aes(x = Date, y = Country, color = `Total Deaths`, size = Mag)) +
+   geom_timeline() +
+   theme_timeline() +
+   ggplot2::labs(size = "Richter scale value", col = "# Deaths")
+```
+
+Finally, the function **geom_timeline_label()** applies `Location Name` labels to the earthquake markers.  This label is only applied to the highest magnitude for that year range, the number being labelled being specified by the `n_max` argument.
+
+```{r}
+df2 %>% 
+   dplyr::filter(Country %in% c("Mexico", "Turkey"), lubridate::year(Date) > 2000) %>% 
+   ggplot2::ggplot(aes(x = Date, y = Country, color = `Total Deaths`, size = Mag)) +
+   geom_timeline() +
+   geom_timeline_label(aes(label = `Location Name`), n_max = 3) +
+   theme_timeline() +
+   ggplot2::labs(size = "Richter scale value", col = "# Deaths")
+```
+
+## How to generate an interactive map
+
+The function **eq_map()** generates a [Leaflet](https://rstudio.github.io/leaflet/) map plotting earthquakes for a specified country and year range, with a basic marker popup date label formatted as YYYY-MM-DD.
+
+```{r eval = FALSE}
+df2 %>% 
+   dplyr::filter(Country == "Turkey", lubridate::year(Date) >= 2010) %>%  
+   eq_map(annot_col = "Date")
+```
+
+Adding the function **eq_create_label()** generates more detailed popup labels with `Location`, `Magintude` and `Total Deaths` fields.  Where data for these fields do not exist in the data (particularly for historical earthquakes), the respective field will not display on the label.
+
+```{r eval = FALSE}
+df2 %>% 
+   dplyr::filter(Country == "Turkey", lubridate::year(Date) >= 2010) %>%  
+   dplyr::mutate(popup_text = eq_create_label(.)) %>%
+   eq_map(annot_col = "popup_text")
 ```

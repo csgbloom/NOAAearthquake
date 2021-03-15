@@ -38,6 +38,8 @@ library(NOAAearthquake)
 
 ## Examples
 
+A vignette on how to use the package is available from [here](vignettes/introduction.html)
+
 The function **eq_clean_data()**:
 
 * loads the data file
