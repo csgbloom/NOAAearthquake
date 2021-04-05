@@ -6,21 +6,6 @@
 \usage{
 theme_timeline()
 }
-\arguments{
-\item{plot.background}{plot background colour}
-
-\item{panel.background}{panel background colour}
-
-\item{legend.key}{background underneath legend}
-
-\item{axis.title.y}{y axis title}
-
-\item{axis.line.x}{x axis line}
-
-\item{axis.ticks.y}{ticks on the y axis}
-
-\item{legend.position}{position of legend}
-}
 \value{
 Output will be ggplot2 layer
 }

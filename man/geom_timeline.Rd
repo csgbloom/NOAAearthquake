@@ -24,13 +24,13 @@ geom_timeline(
 
 \item{position}{Position adjustment}
 
+\item{na.rm}{use na.rm = FALSE from function}
+
 \item{show.legend}{Logical to include legends}
 
 \item{inherit.aes}{Logical to overide default aesthetics}
 
-\item{geom}{Geometric objust to display the data}
-
-\item{params}{Additional parameters to the geom and stat}
+\item{...}{list of other default parameters}
 }
 \value{
 Output will be ggplot2 layer

@@ -18,7 +18,8 @@ Imports:
   readr,
   scales,
   stringr,
-  tidyr
+  tidyr,
+  utils
 RoxygenNote: 7.1.1
 Suggests: 
     rmarkdown,
